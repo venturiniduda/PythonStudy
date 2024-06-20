@@ -5,7 +5,7 @@ Estudos Python
 
 Dia 1:
 20 de junho de 2024
-Aprendendo a dar commit no VSCode no CMD. 
+-[x] Aprendendo a dar commit no VSCode no CMD. 
 
 
 
