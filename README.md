@@ -1,8 +1,11 @@
 # PythonStudy
 ## Por Maria Eduarda Venturini Wollmann
-### 20 de junho de 2024
+### Início: 20 de junho de 2024
 Estudos Python 
 
-testando commit com cmd 
+Dia 1:
+20 de junho de 2024
+Aprendendo a dar commit no VSCode no CMD. 
+
 
 
