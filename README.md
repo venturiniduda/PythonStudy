@@ -3,3 +3,6 @@
 ### 20 de junho de 2024
 Estudos Python 
 
+testando commit com cmd 
+
+
