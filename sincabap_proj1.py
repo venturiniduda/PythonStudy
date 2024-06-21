@@ -3,7 +3,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import csv
-import Pylance as pyl
+import datetime as dt
 
 # para se conectar ao SAP:
 import flask
@@ -13,14 +13,16 @@ import json
 import os
 
 # classe principal
+
+
 class main():
     def modify_parameters(date_str):
-         # Formatação de Parâmetros
-         try:
-            return pyl.datetime.datetime.strptime(date_str, '%Y-%m-%d')
-         except ValueError:
+        # Formatação de Parâmetros
+        try:
+            return dt.datetime.strptime(date_str, '%Y-%m-%d')
+        except ValueError:
             return json.dumps({'erro': 'Formato de data inválido'}), 400
-         
+
     def choice_data():
         filetype = [('Arquivos CSV', '*.csv'),
                     ('Arquivos Excel', '*.xlsx;*.xls')]
@@ -28,6 +30,7 @@ class main():
         if ti_data:
             global arquivo_selecionado
             arquivo_selecionado = ti_data
+            global label_arquivo
             label_arquivo.config(
                 text=f"Arquivo selecionado: {arquivo_selecionado}")
         else:
@@ -55,7 +58,7 @@ class main():
         label_arquivo.pack(fill=tk.BOTH, padx=20, pady=5)
 
         btn_escolher = tk.Button(root, text="Escolher Arquivo: ",
-                                command=main.choice_data, bg = "grey", pady=3, padx=3)
+                                 command=main.choice_data, bg="grey", pady=3, padx=3)
         btn_escolher.pack(fill=tk.BOTH, padx=10, pady=10)
 
         root.mainloop()
@@ -64,15 +67,17 @@ class main():
 
         main.receive_data()
 
+
 # parâmetros para a API
 port = 5723
 api = flask.Flask(__name__)
 postApi = flask_restful.Api(api)
 
+
 @api.route('/', methods=['POST'])
-async def raiz():    
+async def raiz():
     os.system('cls')
-    
+
     p_data = main.modify_parameters(requests.form['data_arquivo'])
 
     try:
@@ -80,28 +85,24 @@ async def raiz():
         print("processar dados")
         main.run()
         ret_meth = arquivo_selecionado
-    
-        if ret_meth !=0:
-            return{"Message": "Erro ao processar dados."}
-        
-        return{
-        "Message": "Sucesso",
-        "Ret_Tb": ret_meth
+
+        if ret_meth != 0:
+            return {"Message": "Erro ao processar dados."}
+
+        return {
+            "Message": "Sucesso",
+            "Ret_Tb": ret_meth
         }
 
     except:
-        return{
+        return {
             "Message": "Erro ao processar POST."
-        }         
-    
+        }
+
 if __name__ == '__main__':
-# os.system('cls')
+    # os.system('cls')
     try:
         api.run(debug=True, host='0.0.0.0', port=5723)
     finally:
-    # Caso haja qualquer erro matar a execução da lib
+        # Caso haja qualquer erro matar a execução da lib
         print("Erro")
-    
-    
-
-
