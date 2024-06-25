@@ -24,17 +24,18 @@ class main():
             return json.dumps({'erro': 'Formato de data inválido'}), 400
 
     def choice_data():
-        filetype = [('Arquivos CSV', '*.csv'),
-                    ('Arquivos Excel', '*.xlsx;*.xls')]
-        ti_data = filedialog.askopenfilename(filetypes=filetype)
-        if ti_data:
-            global arquivo_selecionado
-            arquivo_selecionado = ti_data
-            global label_arquivo
-            label_arquivo.config(
-                text=f"Arquivo selecionado: {arquivo_selecionado}")
-        else:
-            label_arquivo.config(text="Nenhum arquivo selecionado.")
+        # filetype = [('Arquivos CSV', '*.csv'),
+        #             ('Arquivos Excel', '*.xlsx;*.xls')]
+        # ti_data = filedialog.askopenfilename(filetypes=filetype)
+        # if ti_data:
+        #     global arquivo_selecionado
+        #     arquivo_selecionado = ti_data
+        #     global label_arquivo
+        #     label_arquivo.config(
+        #         text=f"Arquivo selecionado: {arquivo_selecionado}")
+        # else:
+        #     label_arquivo.config(text="Nenhum arquivo selecionado.")
+        var = 1
 
     def receive_data():
         print("Recebeu dados.")
@@ -48,22 +49,22 @@ class main():
     def run():
         # execução
         # estruturando tela
-        root = tk.Tk()
-        root.withdraw()
-        root.title("Escolher arquivo: ")
-        arquivo_selecionado = None
+        # root = tk.Tk()
+        # root.withdraw()
+        # root.title("Escolher arquivo: ")
+        # arquivo_selecionado = None
 
-        label_arquivo = tk.Label(
-            root, text="Nenhum arquivo selecionado.", pady=10, padx=10)
-        label_arquivo.pack(fill=tk.BOTH, padx=20, pady=5)
+        # label_arquivo = tk.Label(
+        #     root, text="Nenhum arquivo selecionado.", pady=10, padx=10)
+        # label_arquivo.pack(fill=tk.BOTH, padx=20, pady=5)
 
-        btn_escolher = tk.Button(root, text="Escolher Arquivo: ",
-                                 command=main.choice_data, bg="grey", pady=3, padx=3)
-        btn_escolher.pack(fill=tk.BOTH, padx=10, pady=10)
+        # btn_escolher = tk.Button(root, text="Escolher Arquivo: ",
+        #                          command=main.choice_data, bg="grey", pady=3, padx=3)
+        # btn_escolher.pack(fill=tk.BOTH, padx=10, pady=10)
 
-        root.mainloop()
+        # root.mainloop()
 
-        print("Caminho do arquivo selecionado: ", arquivo_selecionado)
+        # print("Caminho do arquivo selecionado: ", arquivo_selecionado)
 
         main.receive_data()
 
@@ -78,13 +79,15 @@ postApi = flask_restful.Api(api)
 async def raiz():
     os.system('cls')
 
-    p_data = main.modify_parameters(requests.form['data_arquivo'])
+    print(flask.request.data)
+    post_body = json.loads(flask.request.data)
+    # p_data = main.modify_parameters(flask.request.data['data_arquivo'])
 
     try:
         # Convert o post em um arquivo ini
-        print("processar dados")
+        # print("processar dados")
         main.run()
-        ret_meth = arquivo_selecionado
+        ret_meth = "arquivo_selecionado" + date_str
 
         if ret_meth != 0:
             return {"Message": "Erro ao processar dados."}

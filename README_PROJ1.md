@@ -21,3 +21,7 @@ Caminho de execução:
 [Orientação a Objeto no Python](https://www.hashtagtreinamentos.com/programacao-orientada-a-objetos-python?gad_source=1&gclid=CjwKCAjwps-zBhAiEiwALwsVYcX4tg8IXy0z85kxl43HZMtxR__ijv1YA8eRGNjeHx9fiCNiuBm4_xoCCcEQAvD_BwE)
 [Métodos Python](https://www.w3schools.com/python/python_file_handling.asp)
 [Biblioteca TKINTER](https://docs.python.org/3/library/dialog.html)
+
+client 7054868D9D7F0000 
+      80D27E8D9D7F0000
+debugger key 793-889-551
