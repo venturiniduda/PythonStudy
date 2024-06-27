@@ -6,6 +6,14 @@ Objetivo: estruturar API para receber tabela do usuário, formatar os dados e en
 
 Report: YESTMW_APISINCABAP 
 
+#### Versão 1:
+Caminho de execução: 
+- Programa ABAP chama a API passando uma data 
+- API no python lista todos os arquivos do diretório especificado
+- Se existir algum arquivo .CSV com a última data de modificação = data passada pelo usuário no SAP, o arquivo é aberto
+- Os dados da planilha/tabela são tratados e passados para formato .JSON
+- Os dados tratados retornam para o SAP e são exibidos em tela
+
 ### Possíveis caminhos 
 #### Ideia 1: 
 Caminho de execução: 
@@ -21,7 +29,3 @@ Caminho de execução:
 [Orientação a Objeto no Python](https://www.hashtagtreinamentos.com/programacao-orientada-a-objetos-python?gad_source=1&gclid=CjwKCAjwps-zBhAiEiwALwsVYcX4tg8IXy0z85kxl43HZMtxR__ijv1YA8eRGNjeHx9fiCNiuBm4_xoCCcEQAvD_BwE)
 [Métodos Python](https://www.w3schools.com/python/python_file_handling.asp)
 [Biblioteca TKINTER](https://docs.python.org/3/library/dialog.html)
-
-client 7054868D9D7F0000 
-      80D27E8D9D7F0000
-debugger key 793-889-551

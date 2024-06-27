@@ -37,7 +37,6 @@ class main():
             json.dump(dados_csv, json_file,
                       default=main.serializar_data, indent=4)
             
-        # json_file.close()
         return dados_csv
     
     def busca_arquivos(p_data):
