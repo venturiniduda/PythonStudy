@@ -1,9 +1,4 @@
 # bibliotecas
-# para receber arquivos:
-# import tkinter as tk
-# from tkinter import filedialog
-import csv
-
 # para se conectar ao SAP:
 import flask
 import flask_restful
