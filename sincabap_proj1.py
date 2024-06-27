@@ -1,4 +1,7 @@
 # bibliotecas
+# para acessar os arquivos
+import csv
+
 # para se conectar ao SAP:
 import flask
 import flask_restful
@@ -16,6 +19,27 @@ class main():
             body[0]['datetime'], '%Y%m%d').strftime('%d/%m/%Y')
         return data_format
 
+    def serializar_data(obj):
+        if isinstance(obj, datetime.date):
+            return obj.isoformat()
+        raise TypeError(f"Tipo {type(obj)} não pode ser serializado.")
+
+    def formatar_csv(csv):
+        print("Formatando CSV para JSON...")
+
+        dados_csv = []
+
+        for linha in csv:
+            # Adicionar cada linha como um dicionário à lista de dados
+            dados_csv.append(linha)
+
+        with open('dados_json', 'w') as json_file:
+            json.dump(dados_csv, json_file,
+                      default=main.serializar_data, indent=4)
+            
+        # json_file.close()
+        return dados_csv
+    
     def busca_arquivos(p_data):
         print("Buscando arquivos...")
 
@@ -25,16 +49,18 @@ class main():
         for nome_arquivo in os.listdir(diretorio):
             caminho_arquivo = os.path.join(diretorio, nome_arquivo)
             # Verificar se não é um diretório
-            if os.path.isfile(caminho_arquivo):
+            if (os.path.isfile(caminho_arquivo) and nome_arquivo.endswith('.csv')):
                 data_modificacao = datetime.fromtimestamp(
                     os.path.getmtime(caminho_arquivo))
                 data_modif = datetime.strftime(data_modificacao, '%d/%m/%Y')
                 if data_modif == p_data:
                     with open(caminho_arquivo, 'r') as arquivo:
-                        conteudo = arquivo.read()
+                        # conteudo = arquivo.read()
+                        conteudo = csv.DictReader(arquivo)
                         print(nome_arquivo)
                         print(conteudo)
                         result = (f"{nome_arquivo} -> conteudo: {conteudo}")
+                        result = main.formatar_csv(conteudo)
                     break
 
         else:
