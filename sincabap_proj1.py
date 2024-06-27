@@ -1,111 +1,48 @@
 # bibliotecas
 # para receber arquivos:
-import tkinter as tk
-from tkinter import filedialog
-import csv
-import datetime as dt
+# import tkinter as tk
+# from tkinter import filedialog
+# import csv
+# import datetime as dt
 
 # para se conectar ao SAP:
 import flask
 import flask_restful
-import requests
 import json
 import os
-
-# classe principal
-
-
-class main():
-    def modify_parameters(date_str):
-        # Formatação de Parâmetros
-        try:
-            return dt.datetime.strptime(date_str, '%Y-%m-%d')
-        except ValueError:
-            return json.dumps({'erro': 'Formato de data inválido'}), 400
-
-    def choice_data():
-        # filetype = [('Arquivos CSV', '*.csv'),
-        #             ('Arquivos Excel', '*.xlsx;*.xls')]
-        # ti_data = filedialog.askopenfilename(filetypes=filetype)
-        # if ti_data:
-        #     global arquivo_selecionado
-        #     arquivo_selecionado = ti_data
-        #     global label_arquivo
-        #     label_arquivo.config(
-        #         text=f"Arquivo selecionado: {arquivo_selecionado}")
-        # else:
-        #     label_arquivo.config(text="Nenhum arquivo selecionado.")
-        var = 1
-
-    def receive_data():
-        print("Recebeu dados.")
-
-    def modify_data():
-        print("Modificou e padronizou os dados.")
-
-    def send_data():
-        print("Enviou os dados.")
-
-    def run():
-        # execução
-        # estruturando tela
-        # root = tk.Tk()
-        # root.withdraw()
-        # root.title("Escolher arquivo: ")
-        # arquivo_selecionado = None
-
-        # label_arquivo = tk.Label(
-        #     root, text="Nenhum arquivo selecionado.", pady=10, padx=10)
-        # label_arquivo.pack(fill=tk.BOTH, padx=20, pady=5)
-
-        # btn_escolher = tk.Button(root, text="Escolher Arquivo: ",
-        #                          command=main.choice_data, bg="grey", pady=3, padx=3)
-        # btn_escolher.pack(fill=tk.BOTH, padx=10, pady=10)
-
-        # root.mainloop()
-
-        # print("Caminho do arquivo selecionado: ", arquivo_selecionado)
-
-        main.receive_data()
-
 
 # parâmetros para a API
 port = 5723
 api = flask.Flask(__name__)
-postApi = flask_restful.Api(api)
+getApi = flask_restful.Api(api)
 
 
-@api.route('/', methods=['POST'])
+@api.route('/', methods=['GET'])
 async def raiz():
-    os.system('cls')
 
+    os.system('cls')
     print(flask.request.data)
-    post_body = json.loads(flask.request.data)
-    # p_data = main.modify_parameters(flask.request.data['data_arquivo'])
+    get_body = json.loads(flask.request.data)
 
     try:
-        # Convert o post em um arquivo ini
-        # print("processar dados")
-        main.run()
-        ret_meth = "arquivo_selecionado" + date_str
-
-        if ret_meth != 0:
-            return {"Message": "Erro ao processar dados."}
-
+        datetime_noformat = get_body['datetime']
+        datetime_obj = datetime_noformat.strptime(datetime_noformat, '%y%m%d')
+        formatted_date = datetime_obj.strftime('%d/%m/%y')
+        response = {'datetime_formatted': formatted_date}
         return {
-            "Message": "Sucesso",
-            "Ret_Tb": ret_meth
+            "message": "Sucesso",
+            "datetime_formatted": formatted_date
         }
 
     except:
         return {
-            "Message": "Erro ao processar POST."
+            "message": "Erro ao processar GET."
         }
 
 if __name__ == '__main__':
     # os.system('cls')
     try:
         api.run(debug=True, host='0.0.0.0', port=5723)
-    finally:
+    except:
         # Caso haja qualquer erro matar a execução da lib
-        print("Erro")
+        print("Erro de Execução - __main__")
