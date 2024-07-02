@@ -42,10 +42,8 @@ class main():
     def busca_arquivos(p_data):
         print("Buscando arquivos...")
 
-        # diretorio = '/Users/sraso/OneDrive/Documentos/docs_maria/python/diretorio_teste'
+        diretorio = '/Users/sraso/Documents/docs_maria/python/diretorio_teste'
         
-        # DIRETÓRIO TESTE - 02/07/2024
-        diretorio = '/Users/sraso/Documents/PythonAPI/docs_teste'
         # Buscando arquivos na data recebida"
         for nome_arquivo in os.listdir(diretorio):
             caminho_arquivo = os.path.join(diretorio, nome_arquivo)
